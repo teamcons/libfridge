@@ -69,6 +69,11 @@ public class Fridge.json_storage : Object {
     public string storage_path { public get; private set;}
 
     /**
+    * The File object this storage represents
+    */
+    public File file { public get; private set;}
+
+    /**
     * Create a representation of a storage file. If there is no file, the storage is considered empty
     * There is one optional parameters:
     * 
@@ -112,6 +117,7 @@ public class Fridge.json_storage : Object {
 
         data_directory = Environment.get_user_data_dir ();
         storage_path = data_directory + "/" + filename;
+        file = File.new_for_path (storage_path);
         check_if_datadir ();
     }
 
@@ -234,4 +240,19 @@ public class Fridge.json_storage : Object {
         return false;
     }
 
+    /*************************************************/
+    /**
+    * Call this to delete the file storage is connected to
+    */
+    public void delete () {
+        file.delete_async.begin (GLib.Priority.DEFAULT, null, (obj, res) => {
+            try {
+                file.trash_async.end (res);
+
+            } catch (Error e) {
+                this.error (e);
+                warning (e.message);
+            }
+        });
+    }
 }
