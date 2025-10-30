@@ -3,7 +3,7 @@
 
   public static int main (string[] args) {
 
-    var sto = new Fridge.string_storage ();
+    var sto = new Fridge.StringStorage ();
     print ("\n" + "Location: " + sto.storage_path + "\n");
 
     switch (args[1]) {

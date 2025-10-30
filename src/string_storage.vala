@@ -11,7 +11,7 @@
 * You can optionally initialize it with with a file name
 * 
 */
-public class Fridge.string_storage : Object {
+public class Fridge.StringStorage : Object {
 
     /**
     * Used to give a unique name for each new instance without file name
@@ -81,7 +81,7 @@ public class Fridge.string_storage : Object {
     * 
     * the storage emits a changed() signal whenever 
     */
-    public string_storage (string? name =  "") {
+    public StringStorage (string? name = "") {
         Object (filename: name);
     }
 
@@ -123,29 +123,10 @@ public class Fridge.string_storage : Object {
 
     /*************************************************/
     /**
-    * Persistently check for the data directory and create if there is none
-    * Without this, we risk creating our storage in the void
-    */
-    private void check_if_datadir () {
-        debug ("[STORAGE] do we have a data directory?");
-        var dir = File.new_for_path (data_directory);
-
-        try {
-			if (!dir.query_exists ()) {
-				dir.make_directory ();
-				debug ("[STORAGE] yes we do now");
-			}
-		} catch (Error e) {
-			warning ("[STORAGE] Failed to prepare target data directory: %s\n", e.message);
-		}
-	}
-
-    /*************************************************/
-    /**
     * Converts a Json.Node into a string and take care of saving it
     */
     private void save (string? string_data) {
-        debug("[STORAGE] Writing...");
+        debug ("[STORAGE] Writing...");
         check_if_datadir ();
 
         if (read_only) {
@@ -176,7 +157,7 @@ public class Fridge.string_storage : Object {
     * Should the storage be empty, and thus the cache as well, we still check on-disk
     */
     private string? load () {
-        debug("[STORAGE] Loading from storage letsgo");
+        debug ("[STORAGE] Loading from storage letsgo");
         check_if_datadir ();
 
         if (keep_cache && (cache != null)) {
@@ -198,15 +179,14 @@ public class Fridge.string_storage : Object {
 
         return string_data;
     }
-    
-    
+
     /*************************************************/
     /**
     * Drop everything. The next time "content" is accessed, it will be read from disk
     * If keep_cache is set to true, a new cache will be generated
     */
     private void empty_cache () {
-        debug("[STORAGE] Emptying cache");
+        debug ("[STORAGE] Emptying cache");
         cache = null;
     }
 
@@ -225,7 +205,7 @@ public class Fridge.string_storage : Object {
     * Return whether storage contains input
     */
     private bool contains (string? some_string) {
-        debug("[STORAGE] Checking if storage contains element");
+        debug ("[STORAGE] Checking if storage contains element");
         var currently_stored = load ();
 
         // True if storage is null, else false.

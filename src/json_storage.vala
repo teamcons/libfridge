@@ -11,7 +11,7 @@
 * You can optionally initialize it with with a file name
 * 
 */
-public class Fridge.json_storage : Object {
+public class Fridge.JsonStorage : Object {
 
     /**
     * Used to give a unique name for each new instance without file name
@@ -81,7 +81,7 @@ public class Fridge.json_storage : Object {
     * 
     * the storage emits a changed() signal whenever 
     */
-    public json_storage (string? name =  "") {
+    public JsonStorage (string? name = "") {
         Object (filename: name);
     }
 
@@ -123,29 +123,10 @@ public class Fridge.json_storage : Object {
 
     /*************************************************/
     /**
-    * Persistently check for the data directory and create if there is none
-    * Without this, we risk creating our storage in the void
-    */
-    private void check_if_datadir () {
-        debug ("[STORAGE] do we have a data directory?");
-        var dir = File.new_for_path (data_directory);
-
-        try {
-			if (!dir.query_exists ()) {
-				dir.make_directory ();
-				debug ("[STORAGE] yes we do now");
-			}
-		} catch (Error e) {
-			warning ("[STORAGE] Failed to prepare target data directory: %s\n", e.message);
-		}
-	}
-
-    /*************************************************/
-    /**
     * Converts a Json.Node into a string and take care of saving it
     */
     private void save (Json.Array? json_data) {
-        debug("[STORAGE] Writing...");
+        debug ("[STORAGE] Writing...");
         check_if_datadir ();
 
         if (read_only) {
@@ -175,7 +156,7 @@ public class Fridge.json_storage : Object {
     * Should the storage be empty, and thus the cache as well, we still check on-disk
     */
     private Json.Array? load () {
-        debug("[STORAGE] Loading from storage letsgo");
+        debug ("[STORAGE] Loading from storage letsgo");
         check_if_datadir ();
 
         if (keep_cache && (cache != null)) {
@@ -192,20 +173,20 @@ public class Fridge.json_storage : Object {
             if (keep_cache) { cache = array;};
 
         } catch (Error e) {
-            warning ("[STORAGE] Failed to load from storage: " + e.message.to_string());
+            warning ("[STORAGE] Failed to load from storage: " + e.message.to_string ());
             error (e);
         }
 
         return array;
     }
-    
+
     /*************************************************/
     /**
     * Drop everything. The next time "content" is accessed, it will be read from disk
     * If keep_cache is set to true, a new cache will be generated
     */
     private void empty_cache () {
-        debug("[STORAGE] Emptying cache");
+        debug ("[STORAGE] Emptying cache");
         cache = null;
     }
 
@@ -214,7 +195,7 @@ public class Fridge.json_storage : Object {
     * Return whether storage is empty
     */
     private bool is_empty () {
-        debug("[STORAGE] Checking if storage is empty");
+        debug ("[STORAGE] Checking if storage is empty");
         var currently_stored = load ();
         return ((currently_stored == null) || (currently_stored.get_elements ().length () == 0));
     }
@@ -224,7 +205,7 @@ public class Fridge.json_storage : Object {
     * Return whether storage contains input
     */
     private bool contains (Json.Node? some_node) {
-        debug("[STORAGE] Checking if storage contains element");
+        debug ("[STORAGE] Checking if storage contains element");
         var currently_stored = load ();
 
         if (currently_stored == null) {
