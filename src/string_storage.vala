@@ -11,7 +11,7 @@
 * You can optionally initialize it with with a file name
 * 
 */
-public class Fridge.StringStorage : Object {
+public class Fridge.StringStorage : GLib.Object {
 
     /**
     * Used to give a unique name for each new instance without file name
@@ -71,7 +71,7 @@ public class Fridge.StringStorage : Object {
     /**
     * The File object this storage represents
     */
-    public File file { public get; private set;}
+    public GLib.File file { public get; private set;}
 
     /**
     * Create a representation of a storage file. If there is no file, the storage is considered empty
@@ -82,7 +82,7 @@ public class Fridge.StringStorage : Object {
     * the storage emits a changed() signal whenever 
     */
     public StringStorage (string? name = "") {
-        Object (filename: name);
+        GLib.Object (filename: name);
     }
 
     /**
@@ -117,7 +117,7 @@ public class Fridge.StringStorage : Object {
 
         data_directory = Environment.get_user_data_dir ();
         storage_path = data_directory + "/" + filename;
-        file = File.new_for_path (storage_path);
+        file = GLib.File.new_for_path (storage_path);
         check_if_datadir ();
     }
 
@@ -135,7 +135,7 @@ public class Fridge.StringStorage : Object {
         }
 
         try {
-            var storage_file = File.new_for_path (storage_path);
+            var storage_file = GLib.File.new_for_path (storage_path);
             var dostream = new DataOutputStream (
                 storage_file.replace (null, false, GLib.FileCreateFlags.REPLACE_DESTINATION)
             );

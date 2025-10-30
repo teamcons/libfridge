@@ -53,7 +53,7 @@ libfridge_deps = [
   gio_os_dep,
   dependency('glib-2.0', version: '>=' + glib_min_version),
   dependency('gobject-2.0', version: '>=' + glib_min_version),
-  dependency('json-glib-1.0', required : get_option('enable_json'))
+  dependency('json-glib-1.0', required: get_option('enable_json'))
 ]
 
 subdir('src')
@@ -74,7 +74,7 @@ if get_option('enable_valadoc')
       '--force'
     ],
     output: meson.project_name(),
-    build_by_default: true
+    build_by_default: false
   )
 
   install_subdir(

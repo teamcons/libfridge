@@ -10,7 +10,7 @@ namespace Fridge {
     */
     private static void check_if_datadir () {
         debug ("[STORAGE] do we have a data directory?");
-        var dir = File.new_for_path ( Environment.get_user_data_dir ());
+        var dir = GLib.File.new_for_path ( Environment.get_user_data_dir ());
 
         try {
 			if (!dir.query_exists ()) {
