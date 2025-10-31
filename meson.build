@@ -56,7 +56,7 @@ libfridge_deps = [
   dependency('json-glib-1.0', required: get_option('enable_json'))
 ]
 
-subdir('src')
+subdir('lib')
 
 if get_option('enable_valadoc')
   valadoc = find_program('valadoc')
