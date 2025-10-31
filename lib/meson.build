@@ -1,7 +1,6 @@
 sources = files([
   'Static.vala',
-  'StringStorage.vala',
-  'demo.vala'
+  'StringStorage.vala'
 ])
 
 if get_option('enable_json')

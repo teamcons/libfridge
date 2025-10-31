@@ -82,3 +82,7 @@ if get_option('enable_valadoc')
     install_dir: get_option('datadir') / 'devhelp' / 'books'
   )
 endif
+
+if get_option('build_demo')
+ subdir('demo')
+endif
