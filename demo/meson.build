@@ -4,7 +4,7 @@
       'demo.vala',
 
       dependencies: [
-          dependency (libfridge-0.1)
+          dependency ('libfridge-0.1')
       ],
 
       install: true,
